@@ -19,6 +19,5 @@ public class Autor {
 	private String email;
 	private LocalDate nascimento;
 	private String miniCurriculo;
-	
 
 }
