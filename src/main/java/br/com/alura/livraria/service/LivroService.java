@@ -1,31 +1,37 @@
 package br.com.alura.livraria.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.livraria.dto.LivroDTO;
 import br.com.alura.livraria.dto.LivroFormDTO;
 import br.com.alura.livraria.modelo.Livro;
+import br.com.alura.livraria.repository.LivroRepository;
 
 @Service
 public class LivroService {
 	
-	private List<Livro> livros = new ArrayList<>();
+	@Autowired
+	private LivroRepository livroRepository;
 	private ModelMapper modelMapper = new ModelMapper();
 
-	public List<LivroDTO> listar() {
-		return livros.stream().map(t -> modelMapper.map(t, LivroDTO.class)).collect(Collectors.toList());
-
+	public Page<LivroDTO> listar(Pageable paginacao) {
+		Page<Livro> livros = livroRepository.findAll(paginacao);
+		return livros.map(t-> modelMapper.map(t, LivroDTO.class));
+		
 	}
 
-	public void cadastrar(LivroFormDTO dto) {
+	@Transactional
+	public LivroDTO cadastrar(LivroFormDTO dto) {
 		Livro livro = modelMapper.map(dto, Livro.class);
-
-		livros.add(livro);
+		livro.setId(null);
+		
+		livroRepository.save(livro);
+		return modelMapper.map(livro, LivroDTO.class);
 
 	}
 
