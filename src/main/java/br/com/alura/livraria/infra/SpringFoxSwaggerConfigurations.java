@@ -27,7 +27,7 @@ public class SpringFoxSwaggerConfigurations {
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfo(
-			"API Livraria",
+			"API Livraria Online",
 			"Cadastro e visualização de livros e autores.",
 			"Termos de Uso",
 			"Termos de Serviço",

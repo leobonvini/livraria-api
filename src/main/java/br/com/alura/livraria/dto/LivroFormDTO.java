@@ -6,6 +6,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -24,7 +25,7 @@ public class LivroFormDTO {
 	@PastOrPresent
 	private LocalDate lancamento;
 	
-	@DecimalMin(value="100")
+	@DecimalMin(value="100", message = "{livro.paginas.invalido}")
 	private int numeroDePaginas;
 	
 	@JsonAlias("autor_id")
