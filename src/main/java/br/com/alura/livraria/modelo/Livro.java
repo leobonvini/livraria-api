@@ -41,5 +41,13 @@ public class Livro {
 		this.numeroDePaginas = numeroDePaginas;
 		
 	}
+
+	public Livro(String titulo, LocalDate lancamento, Integer numeroDePaginas, Autor autor) {
+		super();
+		this.titulo = titulo;
+		this.lancamento = lancamento;
+		this.numeroDePaginas = numeroDePaginas;
+		this.autor = autor;
+	}
 	
 }

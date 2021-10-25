@@ -40,4 +40,11 @@ public class Autor {
 		this.miniCurriculo = miniCurriculo;
 	}
 
+	public Autor(String nome, String email, LocalDate nascimento, String miniCurriculo) {
+		this.nome = nome;
+		this.email = email;
+		this.nascimento = nascimento;
+		this.miniCurriculo = miniCurriculo;
+	}
+	
 }
