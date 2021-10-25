@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import br.com.alura.livraria.dto.Erro400DTO;
 import br.com.alura.livraria.dto.Erro500DTO;
@@ -20,7 +21,8 @@ import br.com.alura.livraria.dto.Erro500DTO;
 @RestControllerAdvice
 public class TratamentoDeErros {
 	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ExceptionHandler({MethodArgumentNotValidException.class, 
+		MethodArgumentTypeMismatchException.class})
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public List<Erro400DTO> tratarErro400(MethodArgumentNotValidException ex) {
 		return ex.
@@ -40,7 +42,8 @@ public class TratamentoDeErros {
 				req.getRequestURI());
 	}
 	
-	@ExceptionHandler({EntityNotFoundException.class, EmptyResultDataAccessException.class })
+	@ExceptionHandler({EntityNotFoundException.class,
+		EmptyResultDataAccessException.class})
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	public void tratarErro404() {
 	}
