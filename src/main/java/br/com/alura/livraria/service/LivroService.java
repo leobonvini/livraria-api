@@ -18,11 +18,7 @@ import br.com.alura.livraria.modelo.Autor;
 import br.com.alura.livraria.modelo.Livro;
 import br.com.alura.livraria.repository.AutorRepository;
 import br.com.alura.livraria.repository.LivroRepository;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Service
 public class LivroService {
 	
