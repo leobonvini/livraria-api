@@ -2,11 +2,14 @@ package br.com.alura.livraria.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.alura.livraria.dto.QuantidadeDeLivrosDTO;
 import br.com.alura.livraria.modelo.Livro;
+import br.com.alura.livraria.modelo.Usuario;
 
 public interface LivroRepository extends JpaRepository<Livro, Long>{
 
