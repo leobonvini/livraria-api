@@ -54,6 +54,7 @@ class LivroServiceTest {
 		
 	}
 	
+	@Test
 	void naoDeveriaCadastrarUmLivroComAutorInvalido() {
 		LivroFormDTO formDTO = criarFormDTO();
 		

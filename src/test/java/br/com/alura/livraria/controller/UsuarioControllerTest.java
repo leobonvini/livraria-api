@@ -1,6 +1,5 @@
 package br.com.alura.livraria.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -18,10 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.jayway.jsonpath.JsonPath;
 
 import br.com.alura.livraria.infra.security.TokenService;
 import br.com.alura.livraria.modelo.Perfil;
@@ -34,8 +30,8 @@ import br.com.alura.livraria.repository.UsuarioRepository;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-class RelatoriosControllerTest {
-	
+class UsuarioControllerTest {
+
 	@Autowired
 	private MockMvc mvc;
 	
@@ -62,40 +58,36 @@ class RelatoriosControllerTest {
 	}
 	
 	@Test
-	void deveriaRetornarRelatorioDeLivros() throws Exception{
-		String jsonAutor = "{\"nome\":\"Fulano da Silva\","
-				+ "\"email\":\"fulano@fulano.com\","
-				+ "\"nascimento\":\"1990-01-01\",\"miniCurriculo\":\"Livros genericos\"}";
-		
-		String jsonAutorRetornado = "{\"nome\":\"Fulano da Silva\",\"email\":\"fulano@fulano.com\",\"miniCurriculo\":\"Livros genericos\"}";
-		
-		MvcResult resultado = mvc
-		.perform(post("/autores")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(jsonAutor)
-		.header("Authorization", "Bearer " + token))
-		.andExpect(status().isCreated())
-		.andExpect(header().exists("Location"))
-		.andExpect(content().json(jsonAutorRetornado))
-		.andReturn();
-		
-		Integer id = JsonPath.read(resultado.getResponse().getContentAsString(), "$.id");
-				
-		String jsonLivro = "{\"titulo\":\"Livro Generico\",\"lancamento\":\"2020-01-01\",\"numeroDePaginas\":100,\"autor_id\":"+id+"}";
+	void naoDeveriaCadastrarUsuarioComDadosIncompletos() throws Exception {
+		String json = "{}";
 
 		mvc
-		.perform(post("/livros")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(jsonLivro)
-		.header("Authorization", "Bearer " + token));
+		.perform(
+				post("/usuarios")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json)
+				.header("Authorization", "Bearer " + token))
+				.andExpect(status().isBadRequest());
+
 		
-		String json = "[{\"autor\":\"Fulano da Silva\",\"quantidade\":1,\"percentual\":100.0}]";
-				
+	}
+	
+	@Test
+	void deveriaCadastrarUsuarioComDadosIncompletos() throws Exception {
+		String json = "{\"nome\":\"leonardo\",\"login\":\"leonardo\",\"perfilId\":1}";
+		
+		String jsonRetornado = "{\"nome\":\"leonardo\",\"login\":\"leonardo\"}";
+		
 		mvc
-		.perform(get("/relatorios/livraria")
-		.header("Authorization", "Bearer " + token))
-		.andExpect(status().isOk())
-		.andExpect(content().json(json));
+		.perform(
+				post("/usuarios")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json)
+				.header("Authorization", "Bearer " + token))
+				.andExpect(status().isCreated())
+				.andExpect(header().exists("Location"))
+				.andExpect(content().json(jsonRetornado));
+
 		
 	}
 

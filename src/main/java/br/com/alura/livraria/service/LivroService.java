@@ -38,14 +38,18 @@ public class LivroService {
 
 	@Transactional
 	public LivroDTO cadastrar(LivroFormDTO dto) {
-		Livro livro = modelMapper.map(dto, Livro.class);
-		Autor autor = autorRepository.getById(dto.getAutorId());
-		
-		livro.setId(null);
-		livro.setAutor(autor);
-		
-		livroRepository.save(livro);
-		return modelMapper.map(livro, LivroDTO.class);
+		try {
+			Livro livro = modelMapper.map(dto, Livro.class);
+			Autor autor = autorRepository.getById(dto.getAutorId());
+			
+			livro.setId(null);
+			livro.setAutor(autor);
+			
+			livroRepository.save(livro);
+			return modelMapper.map(livro, LivroDTO.class);
+		} catch (EntityNotFoundException e) {
+			throw new IllegalArgumentException("Autor inexistente!");
+		}
 
 	}
 
