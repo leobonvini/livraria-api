@@ -28,7 +28,8 @@ public class LivroService {
 	@Autowired
 	private AutorRepository autorRepository;
 	
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Page<LivroDTO> listar(Pageable paginacao) {
 		Page<Livro> livros = livroRepository.findAll(paginacao);

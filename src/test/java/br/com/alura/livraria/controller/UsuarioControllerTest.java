@@ -73,7 +73,7 @@ class UsuarioControllerTest {
 	}
 	
 	@Test
-	void deveriaCadastrarUsuarioComDadosIncompletos() throws Exception {
+	void deveriaCadastrarUsuarioComDadosCompletos() throws Exception {
 		String json = "{\"nome\":\"leonardo\",\"login\":\"leonardo\",\"perfilId\":1}";
 		
 		String jsonRetornado = "{\"nome\":\"leonardo\",\"login\":\"leonardo\"}";

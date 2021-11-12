@@ -45,7 +45,7 @@ public class UsuarioController {
 		UsuarioDTO usuarioDTO = service.cadastrar(dto);
 		
 		URI uri = uriBuilder
-				.path("/transacoes/{id}")
+				.path("/usuarios/{id}")
 				.buildAndExpand(usuarioDTO.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(usuarioDTO);

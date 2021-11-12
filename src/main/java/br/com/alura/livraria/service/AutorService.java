@@ -23,7 +23,8 @@ public class AutorService {
 	@Autowired
 	private AutorRepository autorRepository;
 	
-	private ModelMapper modelMapper = new ModelMapper();
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Page<AutorDTO> listar(Pageable paginacao) {
 		Page<Autor> autores = autorRepository.findAll(paginacao); 
