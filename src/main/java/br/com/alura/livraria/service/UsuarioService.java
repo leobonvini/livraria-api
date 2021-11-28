@@ -41,6 +41,7 @@ public class UsuarioService {
 	public UsuarioDTO cadastrar(UsuarioFormDTO dto) {
 		
 		Usuario usuario = modelMapper.map(dto, Usuario.class);
+		usuario.setId(null);
 		
 		Perfil perfil = perfilRepository.getById(dto.getPerfilId());
 		usuario.adicionarPerfil(perfil);

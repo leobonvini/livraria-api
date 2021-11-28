@@ -36,6 +36,8 @@ public class AutorService {
 	public AutorDTO cadastrar(AutorFormDTO dto) {
 		Autor autor = modelMapper.map(dto, Autor.class);
 		
+		autor.setId(null);
+		
 		autorRepository.save(autor);
 		return modelMapper.map(autor, AutorDTO.class);
 
